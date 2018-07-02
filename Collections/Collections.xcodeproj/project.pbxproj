@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE2D270220EA42FF008E6E6B /* TableSectionSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D270120EA42FF008E6E6B /* TableSectionSupplementaryView.swift */; };
 		EEB30A1D20E9771000B5DD8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB30A1C20E9771000B5DD8C /* AppDelegate.swift */; };
 		EEB30A2220E9771000B5DD8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEB30A2020E9771000B5DD8C /* Main.storyboard */; };
 		EEB30A2420E9771200B5DD8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEB30A2320E9771200B5DD8C /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EE2D270120EA42FF008E6E6B /* TableSectionSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSectionSupplementaryView.swift; sourceTree = "<group>"; };
 		EEB30A1920E9771000B5DD8C /* Collections.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collections.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEB30A1C20E9771000B5DD8C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EEB30A2120E9771000B5DD8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				EEB30A5920E983CC00B5DD8C /* TextTableViewCell.xib */,
 				EEB30A5320E9821300B5DD8C /* KeyValueTableViewCell.swift */,
 				EEB30A5420E9821300B5DD8C /* KeyValueTableViewCell.xib */,
+				EE2D270120EA42FF008E6E6B /* TableSectionSupplementaryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				EEB30A4D20E980AF00B5DD8C /* TableViewDataSource.swift in Sources */,
 				EEB30A4220E977A600B5DD8C /* CellConfiguratorViewController.swift in Sources */,
 				EEB30A4020E9779100B5DD8C /* MainViewController.swift in Sources */,
+				EE2D270220EA42FF008E6E6B /* TableSectionSupplementaryView.swift in Sources */,
 				EEB30A1D20E9771000B5DD8C /* AppDelegate.swift in Sources */,
 				EEB30A5520E9821300B5DD8C /* KeyValueTableViewCell.swift in Sources */,
 				EEB30A5E20E983FE00B5DD8C /* TextModel.swift in Sources */,

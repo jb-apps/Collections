@@ -34,7 +34,7 @@ public protocol Updatable {
  *  Protocol to be implemented by cells for selection purpose
  */
 public protocol Selectable {
-    var selection: () -> Void { get }
+    var selection: (ULTableViewCellConfiguratorType) -> Void { get }
 }
 
 
@@ -58,8 +58,13 @@ open class TableViewDataSource: NSObject, UITableViewDataSource, DataSourceType 
         return indexPaths
     }
     
+    // MARK: - Subscripts
     subscript(indexPath: IndexPath) -> ULTableViewCellConfiguratorType {
         return sections[indexPath.section][indexPath.row]
+    }
+    
+    subscript(index: Int) -> TableViewDataSourceSection {
+        return sections[index]
     }
     
     public init(title: String? = nil, sections: [TableViewDataSourceSection]) {
@@ -175,7 +180,7 @@ public enum TableViewDataSourceSectionSupplementaryItemMetrics {
 
 public enum TableViewDataSourceSectionSupplementaryItem {
     case string(String)
-    case view(element: UIView, height: TableViewDataSourceSectionSupplementaryItemMetrics)
+    case view(element: UIView, metrics: TableViewDataSourceSectionSupplementaryItemMetrics)
 }
 
 /**
@@ -230,7 +235,7 @@ extension TableViewDataSourceSection {
  * Cell configurators
  */
 public protocol ULTableViewCellConfiguratorType {
-    var onSelection: (() -> Swift.Void)? { get }
+    var isSelectable: Bool { get }
     var cellClass: AnyClass { get }
     var cellIdentifier: String { get }
     
@@ -239,10 +244,14 @@ public protocol ULTableViewCellConfiguratorType {
 }
 
 public struct TableViewCellConfigurator<Cell: Updatable & UITableViewCell>: ULTableViewCellConfiguratorType {
+    public var isSelectable: Bool {
+        return onSelection != nil
+    }
+    
     public let model: Cell.Model
     public let cellClass: AnyClass = Cell.self
     public let cellIdentifier: String =  String(describing: Cell.self)
-    public var onSelection: (() -> Swift.Void)? = nil
+    public var onSelection: ((TableViewCellConfigurator) -> Swift.Void)? = nil
     
     public init(model: Cell.Model) {
         self.model = model
@@ -256,7 +265,7 @@ public struct TableViewCellConfigurator<Cell: Updatable & UITableViewCell>: ULTa
         _cell.update(with: model)
     }
     
-    func with(_ selection: @escaping () -> Swift.Void) -> TableViewCellConfigurator<Cell> {
+    func with(_ selection: @escaping (TableViewCellConfigurator) -> Swift.Void) -> TableViewCellConfigurator<Cell> {
         
         var configurator = TableViewCellConfigurator<Cell>(model: model)
         configurator.onSelection = selection
@@ -265,6 +274,6 @@ public struct TableViewCellConfigurator<Cell: Updatable & UITableViewCell>: ULTa
     }
     
     public func didSelectCell() {
-        onSelection?()
+        onSelection?(self)
     }
 }
