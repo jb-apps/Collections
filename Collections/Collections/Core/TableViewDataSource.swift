@@ -11,7 +11,7 @@ public protocol DataSourceType {
     var allIndexPaths: [IndexPath] { get }
     
     func configure(with collection: Collection)
-    func replace(cellConfigurator: ULTableViewCellConfiguratorType, at indexPath: IndexPath)
+    func replace(cellConfigurator: TableViewCellConfiguratorType, at indexPath: IndexPath)
     
     func viewForHeaderInSection(_ section: Int) -> UIView?
     func heightForHeaderInSection(_ section: Int) -> CGFloat
@@ -34,7 +34,7 @@ public protocol Updatable {
  *  Protocol to be implemented by cells for selection purpose
  */
 public protocol Selectable {
-    var selection: (ULTableViewCellConfiguratorType) -> Void { get }
+    var selection: (TableViewCellConfiguratorType) -> Void { get }
 }
 
 
@@ -59,7 +59,7 @@ open class TableViewDataSource: NSObject, UITableViewDataSource, DataSourceType 
     }
     
     // MARK: - Subscripts
-    subscript(indexPath: IndexPath) -> ULTableViewCellConfiguratorType {
+    subscript(indexPath: IndexPath) -> TableViewCellConfiguratorType {
         return sections[indexPath.section][indexPath.row]
     }
     
@@ -85,11 +85,11 @@ open class TableViewDataSource: NSObject, UITableViewDataSource, DataSourceType 
         }
     }
     
-    public func object(at indexPath: IndexPath) -> ULTableViewCellConfiguratorType {
+    public func object(at indexPath: IndexPath) -> TableViewCellConfiguratorType {
         return sections[indexPath.section][indexPath.row]
     }
     
-    public func replace(cellConfigurator: ULTableViewCellConfiguratorType, at indexPath: IndexPath) {
+    public func replace(cellConfigurator: TableViewCellConfiguratorType, at indexPath: IndexPath) {
         sections[indexPath.section].replace(cellConfigurator: cellConfigurator, at: indexPath.row)
     }
     
@@ -188,13 +188,13 @@ public enum TableViewDataSourceSectionSupplementaryItem {
  *  Generic Data source section
  */
 public struct TableViewDataSourceSection {
-    public var items: [ULTableViewCellConfiguratorType]
+    public var items: [TableViewCellConfiguratorType]
     public var header: TableViewDataSourceSectionSupplementaryItem? = nil
     public var footer: TableViewDataSourceSectionSupplementaryItem? = nil
     
     public init (header: TableViewDataSourceSectionSupplementaryItem?,
                  footer: TableViewDataSourceSectionSupplementaryItem?,
-                 items: [ULTableViewCellConfiguratorType]) {
+                 items: [TableViewCellConfiguratorType]) {
         self.items = items
         self.header = header
         self.footer = footer
@@ -204,26 +204,26 @@ public struct TableViewDataSourceSection {
         return items.count
     }
     
-    subscript(index: Int) -> ULTableViewCellConfiguratorType {
+    subscript(index: Int) -> TableViewCellConfiguratorType {
         return items[index]
     }
     
-    mutating func replace(cellConfigurator: ULTableViewCellConfiguratorType, at index: Int) {
+    mutating func replace(cellConfigurator: TableViewCellConfiguratorType, at index: Int) {
         items[index] = cellConfigurator
     }
 }
 
 extension TableViewDataSourceSection {
-    public init(items: [ULTableViewCellConfiguratorType]) {
+    public init(items: [TableViewCellConfiguratorType]) {
         self.items = items
     }
     
-    public init(header: TableViewDataSourceSectionSupplementaryItem, items: [ULTableViewCellConfiguratorType]) {
+    public init(header: TableViewDataSourceSectionSupplementaryItem, items: [TableViewCellConfiguratorType]) {
         self.items = items
         self.header = header
     }
     
-    public init(footer: TableViewDataSourceSectionSupplementaryItem, items: [ULTableViewCellConfiguratorType]) {
+    public init(footer: TableViewDataSourceSectionSupplementaryItem, items: [TableViewCellConfiguratorType]) {
         self.items = items
         self.footer = footer
     }
@@ -234,7 +234,7 @@ extension TableViewDataSourceSection {
 /**
  * Cell configurators
  */
-public protocol ULTableViewCellConfiguratorType {
+public protocol TableViewCellConfiguratorType {
     var isSelectable: Bool { get }
     var cellClass: AnyClass { get }
     var cellIdentifier: String { get }
@@ -243,7 +243,7 @@ public protocol ULTableViewCellConfiguratorType {
     func didSelectCell()
 }
 
-public struct TableViewCellConfigurator<Cell: Updatable & UITableViewCell>: ULTableViewCellConfiguratorType {
+public struct TableViewCellConfigurator<Cell: Updatable & UITableViewCell>: TableViewCellConfiguratorType {
     public var isSelectable: Bool {
         return onSelection != nil
     }
